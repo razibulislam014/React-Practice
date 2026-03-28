@@ -1,44 +1,31 @@
 import { useState } from "react";
 
-export default function Form() {
-  const [person, setPerson] = useState({
-    firstName: "Barbara",
-    lastName: "Hepworth",
-    email: "bhepworth@sculpture.com",
-  });
+let nextId = 0;
 
-  function handleChange(e) {
-    setPerson({
-      ...person,
-      [e.target.name]: e.target.value,
-    });
-  }
+export default function List() {
+  const [name, setName] = useState("");
+  const [artists, setArtists] = useState([]);
 
   return (
     <>
-      <label>
-        First name:
-        <input
-          name="firstName"
-          value={person.firstName}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        Last name:
-        <input
-          name="lastName"
-          value={person.lastName}
-          onChange={handleChange}
-        />
-      </label>
-      <label>
-        Email:
-        <input name="email" value={person.email} onChange={handleChange} />
-      </label>
-      <p>
-        {person.firstName} {person.lastName} ({person.email})
-      </p>
+      <h1>Inspiring sculptors:</h1>
+      <input value={name} onChange={(e) => setName(e.target.value)} />
+      <button
+        onClick={() => {
+          // artists.push({
+          //   id: nextId++,
+          //   name: name,
+          // });
+          setArtists([...artists, { id: nextId++, name: name }]); // Correct
+        }}
+      >
+        Add
+      </button>
+      <ul>
+        {artists.map((artist) => (
+          <li key={artist.id}>{artist.name}</li>
+        ))}
+      </ul>
     </>
   );
 }
